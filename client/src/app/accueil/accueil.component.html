@@ -1,0 +1,46 @@
+<div class="crowdfunding-platform">
+    <!-- Navbar -->
+  <app-navbar></app-navbar>
+    
+    <!-- Hero Section -->
+    <div class="hero-section" style="background-image: url('assets/crowd3.jpg');">
+      <div class="left-content">
+        <div class="headline">
+          <h1>Fund Your <span class="highlight">Dreams</span> Today</h1>
+        </div>
+        <p class="subtitle">Join thousands of backers supporting innovative projects and bringing creative ideas to life</p>
+        <button class="enroll-button">Show Projects →</button>
+      </div>
+    </div>
+      <!-- Hero Section -->
+    <div class="projects-container">
+        <h2 class="projects-heading">Investment <span class="projects-highlight">Opportunities</span></h2>
+        <div class="projects-grid">
+          <div class="project-card" *ngFor="let project of popularProjects">
+            <div class="project-image">
+              <img [src]="project.image" [alt]="project.title">
+            </div>
+
+          </div>
+        </div>
+      </div>
+  
+    <!-- Featured Project Card -->
+    <div class="featured-project">
+      <div class="card-content">
+        <div class="image-container">
+          <img src="assets/istockphoto-2191860611-612x612.jpg" alt="Featured project" class="project-image">
+        </div>
+        <div class="text-content">
+          <h2 class="title">We Support</h2>
+          <div class="highlight-container">
+            <span class="highlight">Innovative</span>
+            <span class="regular">Projects</span>
+          </div>
+          <p class="description">
+            Our platform connects creators with backers who believe in their vision. From tech startups to artistic endeavors, we help turn ideas into reality through community support.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>

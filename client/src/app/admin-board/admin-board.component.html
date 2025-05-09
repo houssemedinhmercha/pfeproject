@@ -1,0 +1,75 @@
+<div class="admin-dashboard">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar-logo">
+        <img src="assets/crowd.png" alt="Crowdfunding App Logo" />
+        <div class="logo-text">
+          <span class="logo-title">CROWDFUNDING</span>
+          <span class="logo-slogan">Bring ideas to life</span>
+        </div>
+      </div>
+  
+      <div class="navbar-search-container">
+        <div class="navbar-search">
+          <input type="text" placeholder="Search..." class="search-input" />
+          <button class="search-button">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+  
+      <div class="navbar-icons">
+        <button class="icon-button" (click)="openProfile()">
+          <i class="fa fa-user"></i>
+          <span class="tooltip">Profile</span>
+        </button>
+        <button class="icon-button" (click)="logout()">
+          <i class="fa fa-sign-out-alt"></i>
+          <span class="tooltip">Logout</span>
+        </button>
+      </div>
+    </nav>
+  
+    <div class="dashboard-content">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <ul class="sidebar-menu">
+          <li class="sidebar-item">
+            <a routerLink="/admin/dashboard" routerLinkActive="active">
+              <i class="fa fa-chart-line"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a routerLink="/gs-users" routerLinkActive="active">
+              <i class="fa fa-users"></i>
+              <span>Gestion Users</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a routerLink="/admin/projects" routerLinkActive="active">
+              <i class="fa fa-project-diagram"></i>
+              <span>Gestion des Projects</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a routerLink="/admin/constraints" routerLinkActive="active">
+              <i class="fa fa-exclamation-triangle"></i>
+              <span>Gestion des Contraints</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a routerLink="/admin/settings" routerLinkActive="active">
+              <i class="fa fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+  
+      <!-- Main Content -->
+      <main class="main-content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>

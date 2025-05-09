@@ -1,0 +1,102 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 40px;
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo img {
+    width: 48px;
+    height: 48px;
+    margin-right: 12px;
+  }
+  
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .logo-slogan {
+    font-size: 12px;
+    color: #dcdcdc;
+    margin-top: 2px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .nav-item {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative;
+  }
+  
+  .nav-item::after {
+    content: '';
+    display: block;
+    width: 0%;
+    height: 2px;
+    background: white;
+    transition: 0.3s;
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+  }
+  
+  .nav-item:hover::after {
+    width: 100%;
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .btn-login,
+  .btn-register {
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .btn-login {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+  }
+  
+  .btn-login:hover {
+    background: white;
+    color: #4e54c8;
+  }
+  
+  .btn-register {
+    background: white;
+    color: #4e54c8;
+    border: none;
+  }
+  
+  .btn-register:hover {
+    background: #f0f0f0;
+  }
+  
