@@ -1,7 +1,9 @@
+// authControllers.js
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User.model');
 const Role = require('../models/Role.model');
+const upload = require('../midelware/multer');
 
 const authController = {};
 
@@ -45,6 +47,7 @@ authController.login = async (req, res) => {
         role: user.role ? user.role.nom : "Aucun rôle assigné"
       }
     });
+    console.log(token);
   } catch (error) {
     console.error("Erreur lors de la connexion:", error);
     res.status(500).json({ message: "Erreur serveur. Veuillez réessayer plus tard." });
@@ -52,57 +55,51 @@ authController.login = async (req, res) => {
 };
 
 authController.Inscription = async (req, res) => {
-    try {
-      const { nom, prenom, email, password, adresse, phone, typeUtilisateur, roleId } = req.body;
-  
-      // 1. Vérifie si l'utilisateur existe déjà
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Cet email est déjà utilisé.' });
-      }
-  
-      // 2. Vérifie que le type utilisateur est correct
-      if (!['investisseur', 'porteur de projet'].includes(typeUtilisateur)) {
-        return res.status(400).json({ message: 'Type utilisateur invalide.' });
-      }
-  
-      // 3. Hachage du mot de passe
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(password, salt);
-  
-      // 4. Vérifie si le roleId est fourni et si le rôle existe
-      let role = null; // Définir par défaut à null
-      if (roleId) {
-        role = await Role.findById(roleId);
-        if (!role) {
-          return res.status(400).json({ message: 'Rôle non valide.' });
-        }
-      }
-  
-      // 5. Création de l'utilisateur
-      const newUser = new User({
-        nom,
-        prenom,
-        email,
-        password: hashedPassword,
-        adresse,
-        phone,
-        typeUtilisateur,
-        role: role ? role._id : null,  // Si roleId est passé, assigner le rôle, sinon laisser à null
-      });
-  
-      // 6. Sauvegarde de l'utilisateur en base de données
-      await newUser.save();
-      console.log(token);
-  
-      // 7. Réponse après inscription
-      res.status(201).json({ message: 'Utilisateur enregistré avec succès.' });
-  
-    } catch (err) {
-      console.error('Erreur inscription :', err);
-      res.status(500).json({ message: 'Erreur serveur.' });
+  try {
+    const { nom, prenom, email, password, adresse, phone, typeUtilisateur } = req.body;
+
+    // 1. Vérifie si l'utilisateur existe déjà
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Cet email est déjà utilisé.' });
     }
-  };
-  
+
+    // 2. Vérifie que le type utilisateur est correct
+    if (!['investisseur', 'porteurprojet'].includes(typeUtilisateur)) {
+      return res.status(400).json({ message: 'Type utilisateur invalide.' });
+    }
+
+    // 3. Hachage du mot de passe
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    let imageprofile = '';
+    if (req.file) {
+      imageprofile = 'http://localhost:7501/uploads/' + req.file.filename;
+    }
+
+    // 5. Création de l'utilisateur
+    const newUser = new User({
+      nom,
+      prenom,
+      email,
+      password: hashedPassword,
+      adresse,
+      phone,
+      typeUtilisateur,
+      imageprofile,
+      isActive: true
+    });
+
+    // 6. Sauvegarde de l'utilisateur en base de données
+    await newUser.save();
+
+    // 7. Réponse après inscription
+    res.status(201).json({ message: 'Utilisateur enregistré avec succès.' });
+  } catch (err) {
+    console.error('Erreur inscription :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+};
 
 module.exports = authController;

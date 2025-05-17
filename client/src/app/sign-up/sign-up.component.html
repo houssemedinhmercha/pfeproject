@@ -1,126 +1,68 @@
 <div class="login-wrapper">
-    <!-- Orange-themed Navbar (same as login) -->
   <app-navbar></app-navbar>
 
-    <!-- Register Page Content -->
-    <div class="login-page-container">
-        <!-- Image Container on the side -->
-        <div class="login-image-container">
-            <img src="assets/20602852_6333050.jpg" alt="Signup" 
-                 onerror="this.style.display='none'; this.parentElement.classList.add('image-error')">
-        </div>
-
-        <!-- Register Container -->
-        <div class="login-container">
-            <div class="welcome-text">
-                <h1 class="typewriter">Create Your Account!</h1>
-            </div>
-
-            <form [formGroup]="signupForm" (ngSubmit)="handleSignup()" class="login-form">
-                <!-- Show auth error message -->
-                <div class="auth-error-message" *ngIf="error">
-                    {{ error }}
-                </div>
-
-                <div class="form-group">
-                    <label class="label-text">Username</label>
-                    <div class="input-container">
-                        <input 
-                            type="text" 
-                            formControlName="username" 
-                            placeholder="Enter your username"
-                            class="form-input"
-                            [class.invalid]="signupForm.get('username')?.invalid && signupForm.get('username')?.touched" 
-                        >
-                    </div>
-                    <div class="error-message" 
-                         *ngIf="signupForm.get('username')?.invalid && signupForm.get('username')?.touched">
-                        Username is required
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="label-text">Email</label>
-                    <div class="input-container">
-                        <input 
-                            type="email" 
-                            formControlName="email" 
-                            placeholder="Enter your email"
-                            class="form-input"
-                            [class.invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
-                        >
-                    </div>
-                    <div class="error-message" 
-                         *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
-                        <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</span>
-                        <span *ngIf="signupForm.get('email')?.errors?.['email']">Please enter a valid email</span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="label-text">Password</label>
-                    <div class="input-container">
-                        <input 
-                            type="password" 
-                            formControlName="password" 
-                            placeholder="Enter your password"
-                            class="form-input"
-                            [class.invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
-                        >
-                    </div>
-                    <div class="error-message" 
-                         *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
-                        Password is required
-                    </div>
-                </div>
-                    <div class="form-group">
-                        <label class="label-text">Adresse</label>
-                        <div class="input-container">
-                            <input 
-                                type="text" 
-                                formControlName="adresse" 
-                                placeholder="Enter your adresse"
-                                class="form-input"
-                                [class.invalid]="signupForm.get('adresse')?.invalid && signupForm.get('adresse')?.touched" 
-                            >
-                        </div>
-                        <div class="form-group">
-                            <label class="label-text">Date de naissance</label>
-                            <div class="input-container">
-                                <input 
-                                    type="date" 
-                                    formControlName="datenaissance" 
-                                    placeholder="Enter your Date Naissance"
-                                    class="form-input"
-                                    [class.invalid]="signupForm.get('datenaissance')?.invalid && signupForm.get('datenaissance')?.touched" 
-                                >
-                            </div>
-                        </div>
-                       
-                    <div class="error-message" 
-                         *ngIf="signupForm.errors?.['passwordMismatch'] && signupForm.get('confirmPassword')?.touched">
-                        Passwords do not match
-                    </div>
-                </div>
-
-                <button 
-                    type="submit" 
-                    class="login-button" 
-                    [disabled]="signupForm.invalid || isLoading"
-                >
-                    <ng-container *ngIf="!isLoading; else loadingTemplate">
-                        <span>Sign Up</span>
-                    </ng-container>
-                    <ng-template #loadingTemplate>
-                        <span class="spinner"></span>
-                    </ng-template>
-                </button>
-
-                <div class="signup-option">
-                    <span>Already have an account? </span>
-                    <a (click)="navigateToLogin()">Log in instead.</a>
-                </div>
-            </form>
-        </div>
+  <div class="login-page-container">
+    <div class="login-image-container">
+      <img src="assets/20602852_6333050.jpg" alt="Signup"
+        onerror="this.style.display='none'; this.parentElement.classList.add('image-error')">
     </div>
+
+    <div class="login-container">
+      <h1 class="typewriter">Create Your Account!</h1>
+
+      <form [formGroup]="signupForm" (ngSubmit)="handleSignup()" class="login-form">
+        <div *ngIf="error" class="auth-error-message">{{ error }}</div>
+
+        <!-- Champs dynamiques (nom, prenom, email, password, adresse, phone) -->
+        <div class="form-group" *ngFor="let field of ['nom', 'prenom', 'email', 'password', 'adresse', 'phone']">
+          <label class="label-text">{{ field | titlecase }}</label>
+          <div class="input-container">
+            <input 
+              [type]="field === 'email' ? 'email' : (field === 'password' ? 'password' : 'text')"
+              [formControlName]="field"
+              [placeholder]="'Enter your ' + field"
+              class="form-input"
+              [class.invalid]="signupForm.get(field)?.invalid && signupForm.get(field)?.touched"
+            />
+          </div>
+        </div>
+
+        <!-- Champ typeUtilisateur -->
+        <div class="form-group">
+          <label class="label-text">Type d'utilisateur</label>
+          <div class="input-container">
+            <select formControlName="typeUtilisateur" class="form-input"
+              [class.invalid]="signupForm.get('typeUtilisateur')?.invalid && signupForm.get('typeUtilisateur')?.touched">
+              <option value="" disabled selected>Choisissez un type</option>
+              <option value="investisseur">Investisseur</option>
+              <option value="porteurprojet">porteurprojet</option>
+            </select>
+          </div>
+          <div class="error-message" *ngIf="signupForm.get('typeUtilisateur')?.invalid && signupForm.get('typeUtilisateur')?.touched">
+            Ce champ est requis
+          </div>
+        </div>
+
+        <div class="form-group">
+  <label class="label-text">Photo de profil</label>
+  <div class="input-container file-input-container">
+    <input type="file" id="profileImage" class="form-input file-input" (change)="handleFileChange($event)">
+  </div>
+</div>
+
+        <!-- Bouton de soumission -->
+        <button type="submit" class="login-button" [disabled]="signupForm.invalid || isLoading">
+          <ng-container *ngIf="!isLoading; else loading">
+            <span>Sign Up</span>
+          </ng-container>
+          <ng-template #loading><span class="spinner"></span></ng-template>
+        </button>
+
+        <div class="signup-option">
+          <span>Already have an account?</span>
+          <a (click)="navigateToLogin()">Log in instead.</a>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

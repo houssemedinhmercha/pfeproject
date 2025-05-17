@@ -1,4 +1,3 @@
-<!-- login.component.html -->
 <div class="login-wrapper">
     <!-- Orange-themed Navbar -->
     <app-navbar></app-navbar>
@@ -7,7 +6,7 @@
     <div class="login-page-container">
         <!-- Image Container on the side -->
         <div class="login-image-container">
-            <img src="assets/Login-pana.png" alt="Login" 
+            <img src="assets/logimg.jpg" alt="Login" 
                  onerror="this.style.display='none'; this.parentElement.classList.add('image-error')">
         </div>
 
@@ -58,8 +57,9 @@
                     </div>
                 </div>
 
+                <!-- Forgot password link -->
                 <div class="forgot-password">
-                    <a (click)="navigateToForgotPassword()">Forgot password?</a>
+                    <a routerLink="/forgot-password">Forgot password?</a>
                 </div>
 
                 <button 
@@ -75,11 +75,12 @@
                     </ng-template>
                 </button>
 
+                <!-- Sign Up Option -->
                 <div class="signup-option">
                     <span>Don't have an account? </span>
-                    <a (click)="navigateToSignup()">Sign up now.</a>
+                    <a routerLink="/signup">Sign up now.</a>
                 </div>
             </form>
         </div>
-    </div>
+    </div>
 </div>

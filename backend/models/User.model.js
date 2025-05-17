@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   typeUtilisateur: {
     type: String,
-    enum: ['investisseur', 'porteur de projet'],
+    enum: ['investisseur', 'porteurprojet'],
     required: true
   },
   nom: { type: String, required: true },

@@ -1,3 +1,4 @@
+// server.js
 const mongoose = require('mongoose');
 const express = require('express');
 require('dotenv').config(); 
@@ -12,5 +13,5 @@ mongoose.connect(process.env.MONGO_URI)
 // Démarrer le serveur
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log('Serveur démarré sur le port ${port}');
+  console.log(`Serveur démarré sur le port ${port}`);
 });

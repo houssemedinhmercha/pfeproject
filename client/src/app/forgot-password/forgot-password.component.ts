@@ -1,6 +1,6 @@
-// forgot-password.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PasswordResetService } from '../services/password-reset.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,42 +8,45 @@ import { Router } from '@angular/router';
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.css']
 })
-export class ForgotPasswordComponent {
-  forgotPasswordForm: FormGroup;
+export class ForgotPasswordComponent implements OnInit {
+  forgotPasswordForm!: FormGroup;
   isLoading = false;
-  error: string | null = null;
-  successMessage: string | null = null;
+  error: string = '';
+  successMessage: string = '';
 
   constructor(
     private fb: FormBuilder,
+    private passwordResetService: PasswordResetService,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
 
-  sendPasswordResetLink() {
+  sendPasswordResetLink(): void {
     if (this.forgotPasswordForm.invalid) return;
-  
+
     this.isLoading = true;
-    this.error = null;
-    this.successMessage = null;
-  
-    // Simulate sending reset link (replace with actual implementation)
-    setTimeout(() => {
-      this.isLoading = false;
-      this.successMessage = "Password reset link sent! Please check your email.";
-      this.forgotPasswordForm.reset();
-      
-      // Auto-navigate after 5 seconds
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 5000);
-    }, 1000);
+    const email = this.forgotPasswordForm.value.email;
+
+    this.passwordResetService.requestPasswordReset(email).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        this.successMessage = 'Un email de réinitialisation a été envoyé.';
+        this.error = '';
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.error = 'Une erreur est survenue. Veuillez réessayer.';
+        this.successMessage = '';
+      }
+    });
   }
 
-  navigateToLogin() {
-    this.router.navigate(['/login']);
-  }
+  navigateToLogin(): void {
+    this.router.navigate(['/login']); // ou '/auth/login' selon tes routes
+  }
 }
