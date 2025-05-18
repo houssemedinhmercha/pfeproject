@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private apiUrl = 'http://localhost:7501/auth/login'; // URL du backend pour l'authentification
+  private logoutUrl = 'http://localhost:7501/auth/logout'; // URL de déconnexion
 
   constructor(private http: HttpClient) {}
 
@@ -25,5 +26,9 @@ export class AuthService {
   clearToken(): void {
     localStorage.removeItem('token');
   }
+
+  logout(): Observable<any> {
+    return this.http.post<any>(this.logoutUrl, {});
+  }
 }
 

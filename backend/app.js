@@ -4,6 +4,7 @@ const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const passwordRoutes=require('./routes/passwordRoutes');
+const projetRoutes=require('./routes/projetRoutes')
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use('/uploads', express.static('uploads'));
 app.use('/auth', authRoutes);
 app.use('/role', roleRoutes);
 app.use('/password',passwordRoutes);
+app.use('/projet',projetRoutes);
 
 module.exports = app;

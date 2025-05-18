@@ -16,11 +16,11 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password/:token', component: NewPasswordComponent },
   { path: 'admin-board', component: AdminBoardComponent },
   { path: 'gs-users', component: GsUsersComponent },
-  { path: 'investisseur-page', component: InvestisseurPageComponent }, // Route pour Investisseur
-  { path: 'porteur-projet-page', component: PorteurProjetPageComponent }, // Route pour Porteur Projet
+  { path: 'investisseur-page', component: InvestisseurPageComponent }, 
+  { path: 'porteur-projet-page', component: PorteurProjetPageComponent }, 
 
   { path: '**', redirectTo: 'accueil' }
 ];

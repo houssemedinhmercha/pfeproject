@@ -102,4 +102,16 @@ authController.Inscription = async (req, res) => {
   }
 };
 
+authController.logout=(req,res)=>{
+    try{
+        res.clearCookie('token', {path:'/'});
+        req.user= null;
+
+        res.status(200).json({message:"Déconnexion réeussie"});
+    }catch(error){
+        console.log("Eurreur lors de la déconnexion",error);
+        res.status(500).json({message:"Erreur serveur."})
+    }
+};
+
 module.exports = authController;

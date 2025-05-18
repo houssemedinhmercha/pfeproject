@@ -7,5 +7,5 @@ const router = express.Router();
 
 router.post('/Inscription', upload.single('imageprofile'), authController.Inscription);
 router.post('/login', authController.login);
-
+router.post('/logout',authController.logout);
 module.exports = router;

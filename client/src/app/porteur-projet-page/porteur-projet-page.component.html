@@ -1,2 +1,59 @@
- <app-navbar></app-navbar>
- <h2>Welcome to porteur</h2>
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">💰 <span>CROWDFUNDING</span></div>
+    <nav class="nav">
+      <a class="nav-link" [routerLink]="['/profile']">
+        <span class="icon">👤</span>
+        <span class="label">Profil</span>
+      </a>
+      <button class="nav-link">
+        <span class="icon">📄</span>
+        <span class="label">Ajouter projet</span>
+      </button>
+      <a class="nav-link" [routerLink]="['/accord']">
+        <span class="icon">📄</span>
+        <span class="label">Etat projet</span>
+      </a>
+      <a class="nav-link" [routerLink]="['/contrat']">
+        <span class="icon">🗂️</span>
+        <span class="label">Mes contrats</span>
+      </a>
+      
+    
+      <a class="nav-link" [routerLink]="['/procédure']">
+        <span class="icon">💰</span>
+        <span class="label">Les documents  </span>
+      </a>
+     
+      
+     <a class="nav-link" [routerLink]="['/Settings']">
+  <span class="icon">🛠️<i class="fas fa-folder-open"></i></span>
+  <span class="label">Settings</span>
+</a>
+    </nav>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <header class="header">
+      <div class="user-info">
+      
+        <span class="user-name"></span>
+      
+        <button  (click)="logout()" class="logout-btn">
+          <span class="logout-icon">🚪</span>
+          <span class="logout-text">Déconnexion</span>
+        </button>
+              </div>
+    </header>
+
+    <section class="dashboard-stats">
+      <h2 class="section-title">Espace-Client</h2>
+     
+    </section>
+
+    
+    <router-outlet></router-outlet>
+  </div>
+</div>
