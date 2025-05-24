@@ -1,203 +1,148 @@
+/* Conteneur centré et max-width */
+.container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+/* Titre agrandi */
 .table-title {
-  font-weight: bold;
-  font-size: 2rem;
-  text-align: center;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #007bff;
   margin-bottom: 2rem;
-  color: #2c3e50;
-  position: relative;
 }
 
-.table-title::after {
-  content: '';
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, #0d6efd, #6610f2);
-  display: block;
-  margin: 10px auto 0;
-  border-radius: 2px;
-}
-
-.table-container {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.custom-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-.custom-table thead {
-  background: linear-gradient(to right, #0d6efd, #6610f2);
-  color: white;
-}
-
-.custom-table th, .custom-table td {
-  text-align: center;
-  padding: 1rem;
-  vertical-align: middle;
-}
-
-.custom-table tbody tr:hover {
-  background-color: #f8f9fa;
-  transition: background-color 0.3s ease;
-}
-
-.badge.statut {
-  padding: 0.5em 0.9em;
-  font-size: 0.85rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: 600;
-  display: inline-block;
-}
-
-.statut-attente {
-  background: #17a2b8;
-}
-
-.statut-cours {
-  background: #ffc107;
-  color: #212529;
-}
-
-.statut-termine {
-  background: #28a745;
-}
+/* Barre de recherche */
 .search-bar {
-  max-width: 500px;
-  margin: 0 auto 30px auto;
-  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
 }
 
 .search-input {
-  width: 100%;
-  padding: 12px 20px 12px 50px;
+  width: 70%;
+  font-size: 1.3rem;
   border-radius: 30px;
-  border: 1px solid #ddd;
-  background-color: #ffffff;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #007bff;
+  transition: 0.3s;
 }
 
 .search-input:focus {
+  border-color: #0056b3;
+  box-shadow: 0 0 0 0.3rem rgba(0, 123, 255, 0.3);
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
-/* Icône loupe (en utilisant ::before comme pseudo-élément) */
-.search-bar::before {
-  content: '🔍';
-  position: absolute;
-  top: 50%;
-  left: 18px;
-  transform: translateY(-50%);
-  font-size: 18px;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.search-bar {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.search-input {
-  border-radius: 30px;
-  padding: 12px 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.table-title {
-  font-weight: 600;
-  font-size: 28px;
-}
-
-.status-filter .btn {
-  border-radius: 20px;
-  min-width: 100px;
-  transition: transform 0.2s ease;
-}
-
-.status-filter .btn:hover {
-  transform: scale(1.05);
-}
-
+/* Table container avec hauteur fixe + scroll */
 .table-container {
-  overflow-x: auto;
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  max-height: 500px; /* hauteur fixe */
+  overflow-y: auto;  /* scroll vertical */
 }
 
-.custom-table th {
+/* Tableau */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* En-tête sticky */
+.table thead th {
+  position: sticky;
+  top: 0;
   background-color: #343a40;
   color: white;
-  text-align: center;
+  padding: 1rem 0.8rem;
+  font-weight: 700;
+  z-index: 10;
+  border-bottom: 3px solid #0056b3;
 }
 
-.custom-table td,
-.custom-table th {
+/* Lignes du tableau */
+.table tbody tr {
+  background-color: #f8f9fa;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+
+.table tbody tr:hover {
+  background-color: #e3f2fd;
+}
+
+.table td {
+  padding: 1rem 0.8rem;
   vertical-align: middle;
+}
+
+/* Badges */
+.badge {
+  font-size: 1rem;
+  padding: 0.6em 1em;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Boutons */
+.btn-sm {
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-sm:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+td .btn-sm + .btn-sm {
+  margin-left: 0.8rem;
+}
+
+/* Messages d’alerte */
+.alert {
+  font-size: 1.25rem;
+  padding: 1.25rem 2rem;
+  border-radius: 15px;
+  max-width: 600px;
+  margin: 1rem auto 2rem auto;
   text-align: center;
 }
 
-.badge.statut {
-  padding: 5px 10px;
-  font-size: 0.85rem;
+/* Message aucun résultat */
+.text-muted.mt-3 {
+  font-size: 1.25rem;
+  color: #6c757d;
+  margin-top: 2rem;
+}
+.badge {
+  font-size: 1rem;
+  padding: 0.6em 1em;
+  border-radius: 20px;
+  font-weight: 600;
+  text-transform: capitalize;
 }
 
-.statut-attente {
-  background-color: #ffc107;
-  color: #212529;
-}
-
-.statut-cours {
-  background-color: #17a2b8;
-  color: #fff;
-}
-
-.statut-termine {
-  background-color: #28a745;
-  color: #fff;
-}
-/* Styles pour les boutons Accepter et Refuser */
-.btn-sm {
-  border-radius: 30px; /* Bords arrondis pour une touche plus douce */
-  padding: 10px 20px; /* Espacement intérieur */
-  font-weight: 600; /* Texte en gras */
-  font-size: 0.9rem; /* Taille du texte */
-  transition: all 0.3s ease; /* Transition pour l'animation */
-}
-
-.btn-success {
-  background-color: #28a745; /* Vert pour Accepter */
-  border: none; /* Retirer la bordure par défaut */
-  color: white; /* Texte blanc */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Légère ombre portée */
-}
-
-.btn-danger {
-  background-color: #dc3545; /* Rouge pour Refuser */
-  border: none;
+/* Statut validé en vert */
+.bg-success {
+  background-color: #28a745 !important; /* vert bootstrap */
   color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.btn-sm:hover {
-  transform: scale(1.05); /* Légère agrandissement au survol */
-}
-
-.btn-success:hover {
-  background-color: #218838; /* Assombrissement au survol pour Accepter */
-}
-
-.btn-danger:hover {
-  background-color: #c82333; /* Assombrissement au survol pour Refuser */
-}
-
-.btn:focus {
-  outline: none; /* Enlever la bordure bleue par défaut */
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.4); /* Ajouter un léger halo lors du focus */
+/* Statut annulé en rouge */
+.bg-danger {
+  background-color: #dc3545 !important; /* rouge bootstrap */
+  color: white;
 }

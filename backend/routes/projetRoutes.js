@@ -8,7 +8,9 @@ router.put('/modifierProjet/:id', authenticateToken, projetController.modifierPr
 router.delete('/supprimerProjet/:id', authenticateToken, projetController.supprimerProjet);
 router.get('/mes-projets', authenticateToken, projetController.getProjetsUtilisateur);
 router.get('/allProjets', authenticateToken,projetController.getAllProjets);
-router.post('/changer-statut',authenticateToken,projetController.changerStatut);
+router.put('/:id/accepter', authenticateToken,projetController.accepterProjet);
+router.put('/:id/refuser', authenticateToken,projetController.refuserProjet);
+
 
 
 

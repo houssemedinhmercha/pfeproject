@@ -31,7 +31,7 @@ export class ContratService {
 
   // 🔹 Récupérer les fichiers PDF d’un porteur
   getPdfContratsByPorteur(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/contrats/pdf-par-porteur`, {
+    return this.http.get(`${this.baseUrl}/Pdfs`, {
       headers: this.getAuthHeaders()
     });
   }

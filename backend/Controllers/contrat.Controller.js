@@ -89,9 +89,8 @@ contratController.getPdfContratsByPorteur = async (req, res) => {
       return res.status(404).json({ message: "Aucun contrat assigné à cet utilisateur." });
     }
 
-    // Construire la liste des PDFs disponibles avec l’URL complète
     const pdfs = contrats
-      .filter(c => c.fichier)  // ne garder que ceux avec fichier PDF
+      .filter(c => c.fichier)  
       .map(c => ({
         _id: c._id,
         url: `http://localhost:7501/pdfs/${c.fichier}`

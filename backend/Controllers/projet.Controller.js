@@ -142,31 +142,36 @@ projetController.getAllProjets = async (req, res) => {
     });
   }
 };
-projetController.changerStatut = async (req, res) => {
+projetController.accepterProjet = async (req, res) => {
   try {
-    const { projetId } = req.body; 
-
-    const projet = await Projet.findById(projetId); 
-
+    const projet = await Projet.findById(req.params.id);
     if (!projet) {
-      return res.status(404).json({ message: 'Projet non trouvé' });
-    }
-
-    if (projet.statut === 'validé') {
-      return res.status(400).json({ message: 'Le projet est déjà validé' });
-    }
-
-    if (projet.statut !== 'en_attente') {
-      return res.status(400).json({ message: 'Le projet doit être en attente pour être validé' });
+      return res.status(404).json({ message: 'Projet non trouvé.' });
     }
 
     projet.statut = 'validé';
-    await projet.save(); 
+    await projet.save();
 
-   res.status(200).json({ message: 'Statut validé avec succès', projet });
+    res.status(200).json({ message: 'Projet accepté avec succès.', projet });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Erreur serveur lors de la mise à jour du statut' });
+    console.error('Erreur lors de l\'acceptation du projet :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+};
+projetController.refuserProjet = async (req, res) => {
+  try {
+    const projet = await Projet.findById(req.params.id);
+    if (!projet) {
+      return res.status(404).json({ message: 'Projet non trouvé.' });
+    }
+
+    projet.statut = 'annulé';
+    await projet.save();
+
+    res.status(200).json({ message: 'Projet refusé avec succès.', projet });
+  } catch (err) {
+    console.error('Erreur lors du refus du projet :', err);
+    res.status(500).json({ message: 'Erreur serveur.' });
   }
 };
 module.exports = projetController;

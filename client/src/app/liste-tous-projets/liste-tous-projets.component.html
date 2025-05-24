@@ -15,20 +15,18 @@
   <div class="search-bar mb-3 d-flex justify-content-center">
     <input
       type="text"
-      class="form-control search-input"
+      class="form-control search-input w-50"
       placeholder="🔍 Rechercher par titre, catégorie ou porteur..."
       [(ngModel)]="recherche"
     />
   </div>
 
-
-
   <!-- Tableau des projets -->
   <div class="table-container shadow-lg p-3 bg-white rounded">
     <div class="table-responsive">
-      <table *ngIf="projetsFiltres().length > 0" class="table custom-table">
+      <table *ngIf="projetsFiltres().length > 0" class="table table-bordered table-hover">
         <thead class="thead-dark">
-          <tr>
+          <tr class="text-center">
             <th>#</th>
             <th>Titre</th>
             <th>Description</th>
@@ -37,46 +35,51 @@
             <th>Statut</th>
             <th>Porteur</th>
             <th>Dates</th>
-            <th>Action</th> <!-- Nouvelle colonne "Action" -->
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let p of projetsFiltres(); let i = index">
-            <td>{{ i + 1 }}</td>
-            <td><strong>{{ p.titre }}</strong></td>
-            <td>{{ p.description }}</td>
-            <td>{{ p.categorie }}</td>
-            <td><span class="text-primary fw-bold">{{ p.montant_requis }} DNT</span></td>
-            <td>
-              <span class="badge statut"
-                [ngClass]="{
-                  'statut-attente': p.statut === 'en_attente',
-                  'statut-cours': p.statut === 'validé',
-                }">
-                {{ p.statut }}
-              </span>
+            <td class="align-middle text-center">{{ i + 1 }}</td>
+            <td class="align-middle">{{ p.titre }}</td>
+            <td class="align-middle">{{ p.description }}</td>
+            <td class="align-middle">{{ p.categorie }}</td>
+            <td class="align-middle text-primary fw-bold">{{ p.montant_requis }} DNT</td>
+            <td class="align-middle text-center">
+             <span class="badge"
+  [ngClass]="{
+    'bg-secondary': p.statut === 'en_attente',
+    'bg-success': p.statut === 'validé',
+    'bg-danger': p.statut === 'refusé' || p.statut === 'annulé',
+    'bg-warning': p.statut === 'en_cours',
+    'bg-dark': p.statut === 'terminé'
+  }">
+  {{ p.statut }}
+</span>
             </td>
-            <td>{{ p.porteur.prenom }} {{ p.porteur.nom }}</td>
-            <td>{{ p.date_debut | date: 'dd/MM/yyyy' }} - {{ p.date_fin | date: 'dd/MM/yyyy' }}</td>
-            <td> <!-- Nouvelle cellule avec les boutons -->
+            <td class="align-middle">{{ p.porteur?.prenom }} {{ p.porteur?.nom }}</td>
+            <td class="align-middle text-center">
+              {{ p.date_debut | date: 'dd/MM/yyyy' }} - {{ p.date_fin | date: 'dd/MM/yyyy' }}
+            </td>
+            <td class="align-middle text-center">
               <button 
                 class="btn btn-success btn-sm me-2" 
-                (click)="changerStatut(p._id, 'en_cours')" 
+                (click)="accepterProjet(p._id)" 
                 [disabled]="p.statut === 'validé'">
-                Accepter
+                ✔️ Accepter
               </button>
               <button 
                 class="btn btn-danger btn-sm" 
-                (click)="changerStatut(p._id, 'en_attente')" 
+                (click)="refuserProjet(p._id)" 
                 [disabled]="p.statut === 'refusé'">
-                Refuser
+                ❌ Refuser
               </button>
             </td>
           </tr>
         </tbody>
       </table>
 
-      <!-- Aucun résultat après filtrage -->
+      <!-- Aucun résultat -->
       <div *ngIf="projetsFiltres().length === 0" class="text-center text-muted mt-3">
         Aucun projet ne correspond à votre recherche.
       </div>

@@ -13,7 +13,7 @@ export class ProjetService {
 
   private getHeaders(): HttpHeaders {
     const token = this.authService.getToken();
-    console.log('Token utilisé:', token); // LOG DE DEBUG
+    console.log('Token utilisé:', token); // Debug log
     return new HttpHeaders({
       'Authorization': token ? `Bearer ${token}` : '',
       'Content-Type': 'application/json'
@@ -33,18 +33,32 @@ export class ProjetService {
   }
 
   supprimerProjet(projetId: string): Observable<any> {
-  const headers = this.getHeaders();
-  return this.http.delete<any>(`${this.apiUrl}/supprimerProjet/${projetId}`, { headers });
-}
+    return this.http.delete<any>(`${this.apiUrl}/supprimerProjet/${projetId}`, {
+      headers: this.getHeaders()
+    });
+  }
 
   obtenirProjetsUtilisateur(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/mes-projets`, {
       headers: this.getHeaders()
     });
   }
+
   getTousLesProjets(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/allProjets`, {
       headers: this.getHeaders()
     });
   }
+
+  accepterProjet(projetId: string): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}/${projetId}/accepter`, {}, {
+    headers: this.getHeaders()
+  });
 }
+
+refuserProjet(projetId: string): Observable<any> {
+  return this.http.put<any>(`${this.apiUrl}/${projetId}/refuser`, {}, {
+    headers: this.getHeaders()
+  });
+}}
+

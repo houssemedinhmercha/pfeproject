@@ -3,9 +3,12 @@ const PDFDocument = require('pdfkit');
 const path = require('path');
 
 const generateContractPdf = (contrat, user, projets = [], outputPath) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     try {
-      const doc = new PDFDocument({ margin: 50 });
+      const doc = new PDFDocument({ size: 'A4', margin: 40 });
+
+      // Bloquer la création automatique de nouvelle page
+      doc.addPage = () => { /* rien */ };
 
       const dir = path.dirname(outputPath);
       if (!fs.existsSync(dir)) {
@@ -15,60 +18,102 @@ const generateContractPdf = (contrat, user, projets = [], outputPath) => {
       const stream = fs.createWriteStream(outputPath);
       doc.pipe(stream);
 
-      // HEADER
-      const headerHeight = 120;
+      /** HEADER **/
+      const headerHeight = 70;
+      const footerHeight = 40;
       const headerColor = '#1F4E79';
+
       doc.rect(0, 0, doc.page.width, headerHeight).fill(headerColor);
 
-      const logoPath = path.join(__dirname, '..', 'assets', 'Tunisair-logo.png');
-      if (fs.existsSync(logoPath)) {
-        doc.image(logoPath, 40, 40, { width: 120 });
-      }
+      doc.fillColor('#f1d70f')
+        .font('Helvetica-Bold')
+        .fontSize(22)
+        .text('Crowdfundg', 40, 25);
 
-      doc.fontSize(20)
-        .fillColor('#FFFFFF')
-        .text('CONTRAT JURIDIQUE', 200, 50, { align: 'center', underline: true });
+      const titleWidth = doc.widthOfString('CONTRAT JURIDIQUE');
+      doc.fontSize(18)
+        .text('CONTRAT JURIDIQUE', doc.page.width - 40 - titleWidth, 28);
 
-      doc.moveDown(3);
+      /** CONTENU CENTRÉ **/
+      const content = [
+        {
+          title: '1. Informations sur le contrat',
+          items: [
+            `Objet : ${contrat.objet}`,
+            `Montant : ${contrat.montant ?? 'N/A'} DNT`,
+            `Direction : ${contrat.direction ?? 'N/A'}`,
+            `Date signature : ${contrat.dateSignature?.toLocaleDateString() ?? 'N/A'}`,
+            `Date effet : ${contrat.dateEffet?.toLocaleDateString() ?? 'N/A'}`,
+            `Durée : ${contrat.duree ?? 'N/A'}`,
+            `Date fin : ${contrat.dateFin?.toLocaleDateString() ?? 'N/A'}`,
+            `Préavis : ${contrat.datePreavis?.toLocaleDateString() ?? 'N/A'}`
+          ]
+        },
+        {
+          title: '2. Informations sur le porteur',
+          items: [
+            `Nom : ${user.nom} ${user.prenom}`,
+            `Email : ${user.email}`,
+            `Téléphone : ${user.phone ?? 'N/A'}`
+          ]
+        },
+        projets.length > 0 ? {
+          title: '3. Projets associés',
+          items: projets.map((p, i) =>
+            `• ${i + 1}) ${p.nom} - ${p.description ?? 'Sans description'}`
+          )
+        } : null
+      ].filter(Boolean);
 
-      // INFOS CONTRAT
-      doc.fontSize(14).fillColor('#1F4E79').text('1. Informations sur le contrat', { underline: true });
-      doc.fontSize(12).fillColor('black');
-      doc.text(`Objet : ${contrat.objet}`);
-      doc.text(`Montant : ${contrat.montant ?? 'N/A'} DNT`);
-      doc.text(`Direction : ${contrat.direction ?? 'N/A'}`);
-      doc.text(`Date signature : ${contrat.dateSignature?.toLocaleDateString() ?? 'N/A'}`);
-      doc.text(`Date effet : ${contrat.dateEffet?.toLocaleDateString() ?? 'N/A'}`);
-      doc.text(`Durée : ${contrat.duree ?? 'N/A'}`);
-      doc.text(`Date fin : ${contrat.dateFin?.toLocaleDateString() ?? 'N/A'}`);
-      doc.text(`Préavis : ${contrat.datePreavis?.toLocaleDateString() ?? 'N/A'}`);
-      doc.moveDown(2);
-
-      // INFOS UTILISATEUR
-      doc.fontSize(14).fillColor('#1F4E79').text('2. Utilisateur', { underline: true });
-      doc.fontSize(12).fillColor('black');
-      doc.text(`Nom : ${user.nom} ${user.prenom}`);
-      doc.text(`Email : ${user.email}`);
-      doc.text(`Téléphone : ${user.phone ?? 'N/A'}`);
-      doc.moveDown(2);
-
-      // PROJETS ASSOCIÉS
-      if (projets.length > 0) {
-        doc.fontSize(14).fillColor('#1F4E79').text('3. Projets associés', { underline: true });
-        projets.forEach((projet, index) => {
-          doc.fontSize(12).fillColor('black')
-            .text(`• ${index + 1}) Nom : ${projet.nom} | Description : ${projet.description ?? 'N/A'}`);
+      // Calcul hauteur contenu
+      let totalHeight = 0;
+      content.forEach(block => {
+        totalHeight += doc.heightOfString(block.title, { width: doc.page.width - 100 }) + 8;
+        block.items.forEach(item => {
+          totalHeight += doc.heightOfString(item, { width: doc.page.width - 110 }) + 4;
         });
-      }
+        totalHeight += 12;
+      });
 
-      doc.moveDown(2);
+      const availableHeight = doc.page.height - headerHeight - footerHeight - 40;
+      const startY = headerHeight + (availableHeight - totalHeight) / 2;
 
-      // FOOTER
-      doc.fontSize(10).fillColor('#999').text('Centre juridique Tunisair - Contact : (+216) 71 754 000', { align: 'center' });
+      let currentY = startY;
+
+      content.forEach(section => {
+        doc.fontSize(14).fillColor('#1F4E79').font('Helvetica-Bold')
+          .text(section.title, 50, currentY, { width: doc.page.width - 100 });
+        currentY += doc.heightOfString(section.title, { width: doc.page.width - 100 }) + 6;
+
+        const blockHeight = section.items.reduce((acc, item) => acc + doc.heightOfString(item, { width: doc.page.width - 110 }) + 4, 0) + 8;
+        doc.rect(45, currentY - 4, doc.page.width - 90, blockHeight).fill('#F0F0F0');
+
+        currentY += 4;
+
+        section.items.forEach(item => {
+          doc.fontSize(11).fillColor('#000000').font('Helvetica')
+            .text(item, 55, currentY, { width: doc.page.width - 110 });
+          currentY += doc.heightOfString(item, { width: doc.page.width - 110 }) + 4;
+        });
+
+        currentY += 10;
+      });
+
+      /** FOOTER **/
+      doc.fontSize(10)
+        .fillColor('#999')
+        .text(
+          'Centre juridique Crowdfundg - Contact : (+216) 71 754 000',
+          0,
+          doc.page.height - footerHeight + 10,
+          { align: 'center' }
+        );
 
       doc.end();
+
       stream.on('finish', () => resolve());
       stream.on('error', reject);
+
     } catch (error) {
       reject(error);
     }

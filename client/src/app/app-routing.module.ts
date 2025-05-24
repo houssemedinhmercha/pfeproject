@@ -31,6 +31,7 @@ const routes: Routes = [
    { path: 'tous-les-projets', component: ListeTousProjetsComponent },
    {path:'commentaire', component:CommentaireComponent},
   { path: 'contrat', component: AjouterContratComponent }, // <-- route pour le formulaire
+ 
 
   { path: '**', redirectTo: 'accueil' }
 ];

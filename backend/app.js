@@ -19,9 +19,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Sert les fichiers uploadés
 app.use('/uploads', express.static('uploads'));
-app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
-
-// Routes
+app.use('/pdfs', express.static('pdfs'));
+// 
 app.use('/auth', authRoutes);
 app.use('/role', roleRoutes);
 app.use('/password', passwordRoutes);

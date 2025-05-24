@@ -1,52 +1,84 @@
-<!-- ajouter-contrat.component.html -->
-<form [formGroup]="contratForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Objet* :</label>
-    <input formControlName="objet" />
+<form [formGroup]="contratForm" (ngSubmit)="onSubmit()" class="contrat-form">
+  <h2>Créer un nouveau contrat</h2>
+  <div *ngIf="pdfGenerated" class="mt-6 text-center">
+        <h3 class="text-xl font-semibold">Contrat généré avec succès :</h3>
+        <a [href]="getPdfUrl()" target="_blank" class="text-indigo-600 hover:text-indigo-800 flex items-center">
+            <i class="fas fa-download mr-2"></i> Télécharger le PDF
+        </a>
+    </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="objet">Objet* :</label>
+      <input id="objet" formControlName="objet" placeholder="Entrez l'objet du contrat" />
+    </div>
+
+    <div class="form-group">
+      <label for="montant">Montant* :</label>
+      <input id="montant" type="number" formControlName="montant" placeholder="Entrez le montant" />
+    </div>
   </div>
-  <div>
-    <label>Montant* :</label>
-    <input type="number" formControlName="montant" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="direction">Direction :</label>
+      <input id="direction" formControlName="direction" placeholder="Entrez la direction" />
+    </div>
+
+    <div class="form-group">
+      <label for="dateSignature">Date de signature :</label>
+      <input id="dateSignature" type="date" formControlName="dateSignature" />
+    </div>
   </div>
-  <div>
-    <label>Direction :</label>
-    <input formControlName="direction" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="dateEffet">Date d'effet :</label>
+      <input id="dateEffet" type="date" formControlName="dateEffet" />
+    </div>
+
+    <div class="form-group">
+      <label for="duree">Durée :</label>
+      <input id="duree" formControlName="duree" placeholder="Durée du contrat" />
+    </div>
   </div>
-  <div>
-    <label>Date de signature :</label>
-    <input type="date" formControlName="dateSignature" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="dateFin">Date fin :</label>
+      <input id="dateFin" type="date" formControlName="dateFin" />
+    </div>
+
+    <div class="form-group">
+      <label for="datePreavis">Date préavis :</label>
+      <input id="datePreavis" type="date" formControlName="datePreavis" />
+    </div>
   </div>
-  <div>
-    <label>Date d'effet :</label>
-    <input type="date" formControlName="dateEffet" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="numProjet">Numéro Projet* :</label>
+      <input id="numProjet" formControlName="numProjet" placeholder="Numéro du projet" />
+    </div>
+
+    <div class="form-group">
+      <label for="nomPorteur">Nom Porteur* :</label>
+      <input id="nomPorteur" formControlName="nomPorteur" placeholder="Nom du porteur" />
+    </div>
   </div>
-  <div>
-    <label>Durée :</label>
-    <input formControlName="duree" />
+
+  <div class="form-row">
+    <div class="form-group">
+      <label for="prenomPorteur">Prénom Porteur* :</label>
+      <input id="prenomPorteur" formControlName="prenomPorteur" placeholder="Prénom du porteur" />
+    </div>
+    <!-- Pour garder la grille, on met un div vide ici -->
+    <div></div>
   </div>
-  <div>
-    <label>Date fin :</label>
-    <input type="date" formControlName="dateFin" />
-  </div>
-  <div>
-    <label>Date préavis :</label>
-    <input type="date" formControlName="datePreavis" />
-  </div>
-  <div>
-    <label>Numéro Projet* :</label>
-    <input formControlName="numProjet" />
-  </div>
-  <div>
-    <label>Nom Porteur* :</label>
-    <input formControlName="nomPorteur" />
-  </div>
-  <div>
-    <label>Prénom Porteur* :</label>
-    <input formControlName="prenomPorteur" />
-  </div>
-  <button type="submit">Créer Contrat</button>
+
+  <button type="submit" class="btn-submit">Créer Contrat</button>
 </form>
 
-<div *ngIf="message" style="margin-top:10px; color: red;">
+<div *ngIf="message" class="message">
   {{ message }}
 </div>
