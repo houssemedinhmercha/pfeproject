@@ -1,0 +1,85 @@
+<div class="container mt-5">
+  <h2 class="table-title text-center mb-4">📊 Tous les projets</h2>
+
+  <!-- Message d'erreur -->
+  <div *ngIf="errorMessage" class="alert alert-danger shadow-sm rounded text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Message si aucun projet -->
+  <div *ngIf="projets.length === 0" class="alert alert-info shadow-sm rounded text-center">
+    Aucun projet disponible.
+  </div>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar mb-3 d-flex justify-content-center">
+    <input
+      type="text"
+      class="form-control search-input"
+      placeholder="🔍 Rechercher par titre, catégorie ou porteur..."
+      [(ngModel)]="recherche"
+    />
+  </div>
+
+
+
+  <!-- Tableau des projets -->
+  <div class="table-container shadow-lg p-3 bg-white rounded">
+    <div class="table-responsive">
+      <table *ngIf="projetsFiltres().length > 0" class="table custom-table">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Catégorie</th>
+            <th>Montant</th>
+            <th>Statut</th>
+            <th>Porteur</th>
+            <th>Dates</th>
+            <th>Action</th> <!-- Nouvelle colonne "Action" -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of projetsFiltres(); let i = index">
+            <td>{{ i + 1 }}</td>
+            <td><strong>{{ p.titre }}</strong></td>
+            <td>{{ p.description }}</td>
+            <td>{{ p.categorie }}</td>
+            <td><span class="text-primary fw-bold">{{ p.montant_requis }} DNT</span></td>
+            <td>
+              <span class="badge statut"
+                [ngClass]="{
+                  'statut-attente': p.statut === 'en_attente',
+                  'statut-cours': p.statut === 'validé',
+                }">
+                {{ p.statut }}
+              </span>
+            </td>
+            <td>{{ p.porteur.prenom }} {{ p.porteur.nom }}</td>
+            <td>{{ p.date_debut | date: 'dd/MM/yyyy' }} - {{ p.date_fin | date: 'dd/MM/yyyy' }}</td>
+            <td> <!-- Nouvelle cellule avec les boutons -->
+              <button 
+                class="btn btn-success btn-sm me-2" 
+                (click)="changerStatut(p._id, 'en_cours')" 
+                [disabled]="p.statut === 'validé'">
+                Accepter
+              </button>
+              <button 
+                class="btn btn-danger btn-sm" 
+                (click)="changerStatut(p._id, 'en_attente')" 
+                [disabled]="p.statut === 'refusé'">
+                Refuser
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Aucun résultat après filtrage -->
+      <div *ngIf="projetsFiltres().length === 0" class="text-center text-muted mt-3">
+        Aucun projet ne correspond à votre recherche.
+      </div>
+    </div>
+  </div>
+</div>

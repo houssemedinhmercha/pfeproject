@@ -14,8 +14,22 @@ export class InvestisseurPageComponent implements OnInit{
 
   constructor(private authService: AuthService, private router :Router){};
     ngOnInit(): void {
-    }
+    this.loadUserInfo();
+  }
 
+  loadUserInfo(): void {
+    this.authService.getUserInfo().subscribe(
+      (data) => {
+        this.user = data;
+        console.log('Infos utilisateur chargées :', this.user);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des infos utilisateur :', error);
+        // Optionnel : rediriger vers login si token invalide
+        this.router.navigate(['/login']);
+      }
+    );
+  }
  logout() {
   console.log('Tentative de déconnexion...');
   this.isLoading = true;

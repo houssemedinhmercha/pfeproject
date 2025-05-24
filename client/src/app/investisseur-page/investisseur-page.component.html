@@ -7,13 +7,13 @@
         <span class="icon">👤</span>
         <span class="label">Profil</span>
       </a>
-      <button class="nav-link">
+      <a class="nav-link" [routerLink]="['/tous-les-projets']">
         <span class="icon">📄</span>
         <span class="label">Listes des projets</span>
-      </button>
-      <a class="nav-link" [routerLink]="['/accord']">
+      </a>
+      <a class="nav-link" [routerLink]="['/commentaire']">
         <span class="icon">🤝</span>
-        <span class="label">Affecter accord</span>
+        <span class="label">Affecter documents</span>
       </a>
       <a class="nav-link" [routerLink]="['/contrat']">
         <span class="icon">📄</span>
@@ -38,8 +38,12 @@
   <div class="main-content">
     <header class="header">
       <div class="user-info">
-      
-        <span class="user-name"></span>
+      <span class="user-name">{{ user?.nom }} {{ user?.prenom }}</span>
+<img
+  [src]="user?.imageprofile || 'assets/images/user-profile.jpg'"
+  alt="Profil"
+  class="profile-img"
+/>
       
         <button  (click)="logout()" class="logout-btn">
           <span class="logout-icon">🚪</span>

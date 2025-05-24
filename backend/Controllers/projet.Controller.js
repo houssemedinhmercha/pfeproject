@@ -12,26 +12,26 @@ projetController.creerProjet = async (req, res) => {
       return res.status(404).json({ message: 'Utilisateur non trouvé.' });
     }
 
-    const {
-      numProjet,      // <-- ICI
-      titre,
-      description,
-      categorie,
-      montant_requis,
-      date_debut,
-      date_fin
-    } = req.body;
+  const {
+  numProjet,      // <-- Ici
+  titre,
+  description,
+  categorie,
+  montant_requis,
+  date_debut,
+  date_fin
+} = req.body;
 
-    const nouveauProjet = new Projet({
-      numProjet,       // <-- ICI
-      titre,
-      description,
-      categorie,
-      montant_requis,
-      date_debut,
-      date_fin,
-      porteur: porteurId
-    });
+const nouveauProjet = new Projet({
+  numProjet,       // <-- Ici aussi
+  titre,
+  description,
+  categorie,
+  montant_requis,
+  date_debut,
+  date_fin,
+  porteur: porteurId
+});
 
     await nouveauProjet.save();
     res.status(201).json(nouveauProjet);
@@ -87,6 +87,7 @@ projetController.supprimerProjet = async (req, res) => {
   try {
     const porteurId = req.user.userId; // ID extrait du token
     const projetId = req.params.id;
+    console.log('ID du projet:', projetId); // Ajouter un log pour voir l'ID reçu
 
     const projet = await Projet.findById(projetId);
     if (!projet) {
@@ -109,4 +110,63 @@ projetController.supprimerProjet = async (req, res) => {
   }
 };
 
+
+projetController.getProjetsUtilisateur = async (req, res) => {
+  try {
+    const porteurId = req.user.userId;  
+
+    const projets = await Projet.find({ porteur: porteurId });
+
+    if (projets.length === 0) {
+      return res.status(404).json({ message: 'Aucun projet trouvé pour cet utilisateur.' });
+    }
+
+    res.status(200).json(projets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Erreur lors de la récupération des projets.',
+      error: error.message || error
+    });
+  }}
+projetController.getAllProjets = async (req, res) => {
+  try {
+    const projets = await Projet.find().populate('porteur', 'nom prenom '); // Affiche aussi le porteur
+
+    res.status(200).json(projets);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Erreur lors de la récupération de tous les projets.',
+      error: error.message || error
+    });
+  }
+};
+projetController.changerStatut = async (req, res) => {
+  try {
+    const { projetId } = req.body; 
+
+    const projet = await Projet.findById(projetId); 
+
+    if (!projet) {
+      return res.status(404).json({ message: 'Projet non trouvé' });
+    }
+
+    if (projet.statut === 'validé') {
+      return res.status(400).json({ message: 'Le projet est déjà validé' });
+    }
+
+    if (projet.statut !== 'en_attente') {
+      return res.status(400).json({ message: 'Le projet doit être en attente pour être validé' });
+    }
+
+    projet.statut = 'validé';
+    await projet.save(); 
+
+   res.status(200).json({ message: 'Statut validé avec succès', projet });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur lors de la mise à jour du statut' });
+  }
+};
 module.exports = projetController;

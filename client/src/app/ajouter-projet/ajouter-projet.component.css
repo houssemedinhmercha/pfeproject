@@ -1,0 +1,137 @@
+/* Style général du conteneur */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background: #f7f7f7;
+}
+
+/* Titre du formulaire */
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-family: 'Poppins', sans-serif;
+  color: #2c3e50;
+  margin-bottom: 25px;
+  font-weight: 500;
+}
+
+/* Messages de succès et d'erreur */
+.alert {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+/* Style du formulaire et des champs */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 1em;
+  color: #34495e;
+  margin-bottom: 5px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Champs de saisie */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1.5px solid #bdc3c7;
+  font-size: 0.95em;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.3s ease;
+}
+
+/* Effet au focus sur les champs */
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 6px rgba(52, 152, 219, 0.2);
+  background-color: #ffffff;
+  outline: none;
+}
+
+/* Champ de texte */
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Bouton d'envoi */
+button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:focus {
+  outline: none;
+}
+
+/* Espacement et alignement des éléments */
+.form-group input,
+.form-group textarea {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Responsivité (pour les petits écrans) */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    font-size: 0.95em;
+  }
+}

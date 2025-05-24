@@ -1,0 +1,52 @@
+<!-- ajouter-contrat.component.html -->
+<form [formGroup]="contratForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Objet* :</label>
+    <input formControlName="objet" />
+  </div>
+  <div>
+    <label>Montant* :</label>
+    <input type="number" formControlName="montant" />
+  </div>
+  <div>
+    <label>Direction :</label>
+    <input formControlName="direction" />
+  </div>
+  <div>
+    <label>Date de signature :</label>
+    <input type="date" formControlName="dateSignature" />
+  </div>
+  <div>
+    <label>Date d'effet :</label>
+    <input type="date" formControlName="dateEffet" />
+  </div>
+  <div>
+    <label>Durée :</label>
+    <input formControlName="duree" />
+  </div>
+  <div>
+    <label>Date fin :</label>
+    <input type="date" formControlName="dateFin" />
+  </div>
+  <div>
+    <label>Date préavis :</label>
+    <input type="date" formControlName="datePreavis" />
+  </div>
+  <div>
+    <label>Numéro Projet* :</label>
+    <input formControlName="numProjet" />
+  </div>
+  <div>
+    <label>Nom Porteur* :</label>
+    <input formControlName="nomPorteur" />
+  </div>
+  <div>
+    <label>Prénom Porteur* :</label>
+    <input formControlName="prenomPorteur" />
+  </div>
+  <button type="submit">Créer Contrat</button>
+</form>
+
+<div *ngIf="message" style="margin-top:10px; color: red;">
+  {{ message }}
+</div>

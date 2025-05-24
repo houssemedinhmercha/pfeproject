@@ -1,0 +1,42 @@
+<div class="commentaire-container">
+  <h2 class="title">🔍 Recherche de Projet</h2>
+
+  <div class="search-section">
+    <input [(ngModel)]="numProjet" class="search-input" placeholder="Entrez le numéro du projet..." />
+    <button class="btn-search" (click)="onSearchProjet()">Rechercher</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="projet" class="projet-details">
+    <h3>📌 Projet : <span>{{ projet.titre }}</span></h3>
+
+    <form *ngIf="showForm" (ngSubmit)="onAjouterCommentaire()" class="comment-form">
+      <textarea
+        [(ngModel)]="commentaireData.contenu"
+        name="contenu"
+        required
+        class="comment-textarea"
+        placeholder="💬 Écrire un commentaire...">
+      </textarea>
+
+      <input
+        [(ngModel)]="commentaireData.note"
+        name="note"
+        type="number"
+        min="1"
+        max="5"
+        required
+        class="note-input"
+        placeholder="⭐ Note de 1 à 5" />
+
+      <button type="submit" class="btn-submit">Envoyer le commentaire</button>
+    </form>
+  </div>
+
+  <div *ngIf="commentaireAdded" class="success-message">
+    ✅ Commentaire ajouté avec succès !
+  </div>
+</div>

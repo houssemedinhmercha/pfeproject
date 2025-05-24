@@ -9,6 +9,11 @@ import { GsUsersComponent } from './gs-users/gs-users.component';
 import { InvestisseurPageComponent } from './investisseur-page/investisseur-page.component';
 import { PorteurProjetPageComponent } from './porteur-projet-page/porteur-projet-page.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { AjouterProjetComponent } from './ajouter-projet/ajouter-projet.component';
+import { ProjetsComponent } from './projets/projets.component';
+import { ListeTousProjetsComponent} from './liste-tous-projets/liste-tous-projets.component';
+import { CommentaireComponent } from './commentaire/commentaire.component';
+import { AjouterContratComponent } from './ajouter-contrat/ajouter-contrat.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'accueil', pathMatch: 'full' },
@@ -21,6 +26,11 @@ const routes: Routes = [
   { path: 'gs-users', component: GsUsersComponent },
   { path: 'investisseur-page', component: InvestisseurPageComponent }, 
   { path: 'porteur-projet-page', component: PorteurProjetPageComponent }, 
+  { path: 'ajouter-projet', component: AjouterProjetComponent },  // Route pour "Ajouter projet"
+   {path:'projets', component: ProjetsComponent},
+   { path: 'tous-les-projets', component: ListeTousProjetsComponent },
+   {path:'commentaire', component:CommentaireComponent},
+  { path: 'contrat', component: AjouterContratComponent }, // <-- route pour le formulaire
 
   { path: '**', redirectTo: 'accueil' }
 ];

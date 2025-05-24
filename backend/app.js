@@ -1,10 +1,13 @@
-// app.js
 const express = require('express');
 const cors = require('cors');
+const path = require('path');  // <-- Ajouté ici
+
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
-const passwordRoutes=require('./routes/passwordRoutes');
-const projetRoutes=require('./routes/projetRoutes')
+const passwordRoutes = require('./routes/passwordRoutes');
+const projetRoutes = require('./routes/projetRoutes');
+const commentaireRoutes = require('./routes/commentaireRoutes');
+const contratRoutes = require('./routes/contratRoutes');
 
 const app = express();
 
@@ -16,11 +19,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Sert les fichiers uploadés
 app.use('/uploads', express.static('uploads'));
+app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
 
 // Routes
 app.use('/auth', authRoutes);
 app.use('/role', roleRoutes);
-app.use('/password',passwordRoutes);
-app.use('/projet',projetRoutes);
+app.use('/password', passwordRoutes);
+app.use('/projet', projetRoutes);
+app.use('/commentaire', commentaireRoutes);
+app.use('/contrat', contratRoutes);
 
 module.exports = app;

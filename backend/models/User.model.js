@@ -18,7 +18,8 @@ const userSchema = new Schema({
   isActive: { type: Boolean, default: false },
   dateCreation: { type: Date, default: Date.now },
   resetPasswordToken: { type: String, default: null },
-  resetPasswordExpires: { type: Date, default: null }
+  resetPasswordExpires: { type: Date, default: null },
+  contrats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Contrat' }] 
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

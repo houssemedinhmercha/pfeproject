@@ -7,36 +7,48 @@ import { Router } from '@angular/router';
   templateUrl: './porteur-projet-page.component.html',
   styleUrls: ['./porteur-projet-page.component.css']
 })
-export class PorteurProjetPageComponent implements OnInit{
-    user: any = {};
+export class PorteurProjetPageComponent implements OnInit {
+  user: any = {};
   isAddAffaireModal = false;
-  isLoading = false;
-    constructor(private authService: AuthService, private router :Router){};
+  isLoading = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    this.loadUserInfo();
   }
 
+  loadUserInfo(): void {
+    this.authService.getUserInfo().subscribe(
+      (data) => {
+        this.user = data;
+        console.log('Infos utilisateur chargées :', this.user);
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des infos utilisateur :', error);
+        // Optionnel : rediriger vers login si token invalide
+        this.router.navigate(['/login']);
+      }
+    );
+  }
 
+  logout() {
+    console.log('Tentative de déconnexion...');
+    this.isLoading = true;
 
- logout() {
-  console.log('Tentative de déconnexion...');
-  this.isLoading = true;
-
-  this.authService.logout().subscribe(
-    (response) => {
-      console.log('Déconnexion réussie :', response);
-
-      this.authService.clearToken(); // Supprime le token localStorage
-
-      setTimeout(() => {
-        this.router.navigate(['/login']);  // Redirige vers la page login
+    this.authService.logout().subscribe(
+      (response) => {
+        console.log('Déconnexion réussie :', response);
+        this.authService.clearToken();
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+          this.isLoading = false;
+        }, 1000);
+      },
+      (error) => {
+        console.error('Erreur lors de la déconnexion :', error);
         this.isLoading = false;
-      }, 1000);
-    },
-    (error) => {
-      console.error('Erreur lors de la déconnexion :', error);
-      this.isLoading = false;
-    }
-  );
-}
+      }
+    );
+  }
 }
