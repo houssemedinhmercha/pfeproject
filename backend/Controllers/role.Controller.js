@@ -20,37 +20,55 @@ roleController.createRole=async(req,res)=>{
     }
 };
 
-roleController.assignRole =async(req,res)=>{
+roleController.assignRole =async (req, res) => {
     try {
         const { userId, roleId } = req.body;
-    
-        // Vérifie que les deux paramètres sont fournis
+
         if (!userId || !roleId) {
-          return res.status(400).json({ message: "L'ID de l'utilisateur et de rôle sont requis." });
+            return res.status(400).json({ message: "userId et roleId sont requis." });
         }
-    
-        // Vérifie si l'utilisateur existe
+
+        // Vérifier si l'utilisateur existe ou nn
         const user = await User.findById(userId);
         if (!user) {
-          return res.status(404).json({ message: "Utilisateur non trouvé." });
+            return res.status(404).json({ message: "Utilisateur non trouvé." });
         }
-    
-        // Vérifie si le rôle existe
+
+        // Vérifier si le rôle existe
         const role = await Role.findById(roleId);
         if (!role) {
-          return res.status(404).json({ message: "Rôle non trouvé." });
+            return res.status(404).json({ message: "Rôle non trouvé." });
         }
-    
-        // Met à jour l'utilisateur avec le rôle
-        user.role = role._id;
+
+        user.role = roleId;
+        user.isActive = true;  // Activer le compte une fois le rôle assigné
         await user.save();
-    
-        res.status(200).json({ message: "Rôle assigné avec succès.", user });
-    
-      } catch (err) {
-        console.error("Erreur lors de l'assignation du rôle :", err);
-        res.status(500).json({ message: "Erreur serveur. Veuillez réessayer plus tard." });
-      }
+
+        const subject='Votre rôle a été mis à jour';
+        const content=`
+        <p>Bonjour ${user.prenom} ${user.nom},</p>
+        <p>Votre rôle a été mis à jour avec succès. Vous êtes désormais ${role.nom}. et votre compte sera activé</p>
+        <p>Cordialement,<br>Centre juridique Tunisair</p>
+        `
+        sendMail(user.email, subject, content, true);
+
+        res.status(200).json({
+            message: "Rôle assigné avec succès et compte activé.",
+            user: {
+                id: user._id,
+                nom: user.nom,
+                prenom: user.prenom,
+                email: user.email,
+                role: role.nom, 
+                isActive: user.isActive 
+            }
+        });
+
+    } catch (error) {
+        console.error("Erreur lors de l'assignation du rôle:", error);  // Pour déboguer
+        res.status(500).json({ message: "Erreur lors de l'assignation." });
+    }
 };
+
 
 module.exports=roleController;

@@ -1,91 +1,80 @@
-<div class="admin-dashboard">
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="navbar-logo">
-        <img src="assets/crowd.png" alt="Crowdfunding App Logo" />
-        <div class="logo-text">
-          <span class="logo-title">CROWDFUNDING</span>
-          <span class="logo-slogan">Bring ideas to life</span>
-        </div>
-      </div>
-      <div class="navbar-search-container">
-        <div class="navbar-search">
-          <input type="text" placeholder="Search..." class="search-input" />
-          <button class="search-button">
-            <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>
-  
-
-
+<div class="dashboard-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">💰 <span>CROWDFUNDING</span></div>
+    <nav class="nav">
+      <a class="nav-link" [routerLink]="['/profile']">
+        <span class="icon">👤</span>
+        <span class="label">Profil</span>
+      </a>
+      <a class="nav-link" [routerLink]="['/tous-les-utilisateus']">
+        <span class="icon">📄</span>
+        <span class="label">Gestion des utilisateur</span>
+      </a>
+      <a class="nav-link" [routerLink]="['/commentaire']">
+        <span class="icon">🤝</span>
+        <span class="label">Gestion des permissions</span>
+      </a>
+      <a class="nav-link" [routerLink]="['/contrat']">
+        <span class="icon">📄</span>
+        <span class="label">Gestion des contrat</span>
+      </a>
+      
+    
+      <a class="nav-link" [routerLink]="['/procédure']">
+        <span class="icon">💰</span>
+        <span class="label">Gestions documents </span>
+      </a>
      
-    <div class="logo">MonApp</div>
-    <div class="nav-icons">
-      <a href="#" class="icon">
-        <i class="fas fa-bell"></i>
-      </a>
-      <a href="#" class="icon">
-        <i class="fas fa-envelope"></i>
-      </a>
-      <a href="#" class="icon profile">
-        <img src="https://i.pravatar.cc/40" alt="Photo de profil">
-      </a>
-    </div>
-  
-
-      <div class="navbar-icons">
-        <button class="icon-button" (click)="openProfile()">
-          <i class="fa fa-user"></i>
-          <span class="tooltip">Profile</span>
-        </button>
-        <button class="icon-button" (click)="logout()">
-          <i class="fa fa-sign-out-alt"></i>
-          <span class="tooltip">Logout</span>
-        </button>
-      </div>
+      
+    
     </nav>
-  
-    <div class="dashboard-content">
-      <!-- Sidebar -->
-      <aside class="sidebar">
-        <ul class="sidebar-menu">
-          <li class="sidebar-item">
-            <a routerLink="/admin/dashboard" routerLinkActive="active">
-              <i class="fa fa-chart-line"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a routerLink="/gs-users" routerLinkActive="active">
-              <i class="fa fa-users"></i>
-              <span>Gestion Users</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a routerLink="/admin/projects" routerLinkActive="active">
-              <i class="fa fa-project-diagram"></i>
-              <span>Gestion des Projects</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a routerLink="/admin/constraints" routerLinkActive="active">
-              <i class="fa fa-exclamation-triangle"></i>
-              <span>Gestion des Contraints</span>
-            </a>
-          </li>
-          <li class="sidebar-item">
-            <a routerLink="/admin/settings" routerLinkActive="active">
-              <i class="fa fa-cog"></i>
-              <span>Settings</span>
-            </a>
-          </li>
-        </ul>
-      </aside>
-  
-      <!-- Main Content -->
-      <main class="main-content">
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  </div>
+  </aside>
+
+  <!-- Main content -->
+  <div class="main-content">
+    <header class="header">
+      <div class="user-info">
+      <span class="user-name">{{ user?.nom }} {{ user?.prenom }}</span>
+<img
+  [src]="user?.imageprofile || 'assets/images/user-profile.jpg'"
+  alt="Profil"
+  class="profile-img"
+/>
+      
+        <button  (click)="logout()" class="logout-btn">
+          <span class="logout-icon">🚪</span>
+          <span class="logout-text">Déconnexion</span>
+        </button>
+              </div>
+    </header>
+
+    <section class="dashboard-stats">
+      <h2 class="section-title">Tableau de bord - Admin</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>projet</h3>
+          <p>12</p>
+          <p>Affectation : ✔</p>
+          <button class="btn">Voir</button>
+        </div>
+        <div class="stat-card">
+          <h3>Les etudes</h3>
+          <p>5</p>
+          <p>Affectation : ✔</p>
+          <button class="btn">Voir</button>
+        </div>
+        
+        <div class="stat-card">
+          <h3>Contrats</h3>
+          <p>20</p>
+          <p>Affectation : ✖</p>
+          <button class="btn">Voir</button>
+        </div>
+      </div>
+    </section>
+
+    
+    <router-outlet></router-outlet>
+  </div>
+</div>

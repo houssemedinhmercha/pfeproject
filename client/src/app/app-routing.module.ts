@@ -14,6 +14,8 @@ import { ProjetsComponent } from './projets/projets.component';
 import { ListeTousProjetsComponent} from './liste-tous-projets/liste-tous-projets.component';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { AjouterContratComponent } from './ajouter-contrat/ajouter-contrat.component';
+import { ContratPdfComponent } from './contrat-pdf/contrat-pdf.component';
+import { ListeUtilisateursComponent } from './liste-utilisateurs/liste-utilisateurs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'accueil', pathMatch: 'full' },
@@ -31,6 +33,8 @@ const routes: Routes = [
    { path: 'tous-les-projets', component: ListeTousProjetsComponent },
    {path:'commentaire', component:CommentaireComponent},
   { path: 'contrat', component: AjouterContratComponent }, // <-- route pour le formulaire
+  {path:'Mes contrat',component:ContratPdfComponent},
+  {path:'tous-les-utilisateus',component:ListeUtilisateursComponent},
  
 
   { path: '**', redirectTo: 'accueil' }

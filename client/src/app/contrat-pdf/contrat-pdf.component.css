@@ -1,0 +1,129 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+/* Messages */
+.error {
+  color: #b00020;
+  background-color: #fdecea;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 5px solid #b00020;
+  font-size: 16px;
+}
+
+.success {
+  color: #2e7d32;
+  background-color: #e8f5e9;
+  padding: 12px 18px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border-left: 5px solid #2e7d32;
+  font-size: 16px;
+}
+
+/* Liste */
+.pdf-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.pdf-item {
+  display: flex;
+  justify-content: center;
+}
+
+/* Carte PDF */
+.pdf-card {
+  background: rgb(149, 148, 148);
+  border-radius: 12px;
+  padding: 25px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.pdf-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+
+.pdf-icon-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdf-icon {
+  fill: #e53935;
+  width: 64px;
+  height: 64px;
+}
+
+.pdf-label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #292929;
+  margin-bottom: 10px;
+}
+
+/* Boutons */
+.pdf-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-accept {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-accept:hover {
+  background-color: #388e3c;
+}
+
+.btn-refuse {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-refuse:hover {
+  background-color: #d32f2f;
+}
+
+/* Lien PDF */
+.pdf-link {
+  margin-top: 10px;
+  font-size: 15px;
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.pdf-link:hover {
+  text-decoration: underline;
+}

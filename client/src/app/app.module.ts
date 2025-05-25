@@ -22,6 +22,9 @@ import { ProjetsComponent } from './projets/projets.component';
 import { ListeTousProjetsComponent } from './liste-tous-projets/liste-tous-projets.component';
 import { CommentaireComponent } from './commentaire/commentaire.component';
 import { AjouterContratComponent } from './ajouter-contrat/ajouter-contrat.component';
+import { ContratPdfComponent } from './contrat-pdf/contrat-pdf.component';
+import { ListeUtilisateursComponent } from './liste-utilisateurs/liste-utilisateurs.component';
+import { SendEmailComponent } from './send-email/send-email.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,9 @@ import { AjouterContratComponent } from './ajouter-contrat/ajouter-contrat.compo
     ListeTousProjetsComponent,
     CommentaireComponent,
     AjouterContratComponent,
+    ContratPdfComponent,
+    ListeUtilisateursComponent,
+    SendEmailComponent,
   ],
   imports: [
     BrowserModule,
